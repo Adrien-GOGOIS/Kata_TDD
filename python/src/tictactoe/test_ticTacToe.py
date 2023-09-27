@@ -18,7 +18,7 @@ class TestTicTacToe:
 		game = TicTacToe(self.player_1, self.player_2)
 		assert game.play(self.player_1, 2) is True
 		assert game.playedCases[2] is "X"
-		assert game.winner() is None
+		assert game.winner is None
 		assert game.playedCases == [
 			'.', '.', 'X', 
 			'.', '.', '.', 
@@ -46,7 +46,7 @@ class TestTicTacToe:
 			'.', '.', '.', 
 			'.', '.', '.'
 			]
-		assert game.winner() is self.player_1 
+		assert game.winner is self.player_1 
 
 	def test_player_2_should_win_if_first_line_full_of_O(self):
 		game = TicTacToe(self.player_1, self.player_2)
@@ -58,7 +58,7 @@ class TestTicTacToe:
 			'.', '.', '.', 
 			'.', '.', '.'
 			]
-		assert game.winner() is self.player_2
+		assert game.winner is self.player_2
 
 	def test_player_1_should_win_if_second_line_full_of_X(self):
 		game = TicTacToe(self.player_1, self.player_2)
@@ -70,7 +70,7 @@ class TestTicTacToe:
 			'X', 'X', 'X', 
 			'.', '.', '.'
 			]
-		assert game.winner() is self.player_1 is self.player_1
+		assert game.winner is self.player_1 is self.player_1
 
 	def test_player_1_should_win_if_third_line_full_of_X(self):
 		game = TicTacToe(self.player_1, self.player_2)
@@ -82,7 +82,7 @@ class TestTicTacToe:
 			'.', '.', '.',
 			'X', 'X', 'X'
 			]
-		assert game.winner() is self.player_1 is self.player_1
+		assert game.winner is self.player_1 is self.player_1
 
 	def test_player_1_should_win_if_first_column_full_of_X(self):
 		game = TicTacToe(self.player_1, self.player_2)
@@ -94,7 +94,7 @@ class TestTicTacToe:
 			'X', '.', '.',
 			'X', '.', '.'
 			]
-		assert game.winner() is self.player_1 is self.player_1
+		assert game.winner is self.player_1 is self.player_1
 
 	def test_player_1_should_win_if_third_column_full_of_X(self):
 		game = TicTacToe(self.player_1, self.player_2)
@@ -106,7 +106,7 @@ class TestTicTacToe:
 			'.', '.', 'X',
 			'.', '.', 'X'
 			]
-		assert game.winner() is self.player_1 is self.player_1
+		assert game.winner is self.player_1 is self.player_1
 
 	def test_player_2_should_win_if_first_diagonal_full_of_O(self):
 		game = TicTacToe(self.player_1, self.player_2)
@@ -118,7 +118,7 @@ class TestTicTacToe:
 			'.', 'O', '.',
 			'.', '.', 'O'
 			]
-		assert game.winner() is self.player_2 is self.player_2
+		assert game.winner is self.player_2 is self.player_2
 
 	def test_player_2_should_win_if_second_diagonal_full_of_O(self):
 		game = TicTacToe(self.player_1, self.player_2)
@@ -130,7 +130,7 @@ class TestTicTacToe:
 			'.', 'O', '.',
 			'O', '.', '.'
 			]
-		assert game.winner() is self.player_2 is self.player_2
+		assert game.winner is self.player_2 is self.player_2
 
 	def test_play_a_full_game_with_player_1_winner(self):
 		game = TicTacToe(self.player_1, self.player_2)
@@ -146,7 +146,42 @@ class TestTicTacToe:
 			'.', 'X', '.',
 			'X', 'O', 'O'
 			]
-		assert game.winner() is self.player_1 is self.player_1
+		assert game.winner is self.player_1 is self.player_1
+
+	def test_play_a_full_game_with_player_2_winner(self):
+		game = TicTacToe(self.player_2, self.player_2)
+		game.play(self.player_2, 4)
+		game.play(self.player_1, 0)
+		game.play(self.player_2, 1)
+		game.play(self.player_1, 7)
+		game.play(self.player_2, 6)
+		game.play(self.player_1, 8)
+		game.play(self.player_2, 2)
+		assert game.playedCases == [
+			'X', 'O', 'O',  
+			'.', 'O', '.',
+			'O', 'X', 'X'
+			]
+		assert game.winner is self.player_2 is self.player_2
+
+	def test_equality_game_end_if_all_grid_complete_with_no_winner(self):
+		game = TicTacToe(self.player_1, self.player_2)
+		game.play(self.player_1, 4)
+		game.play(self.player_2, 0)
+		game.play(self.player_1, 1)
+		game.play(self.player_2, 7)
+		game.play(self.player_1, 6)
+		game.play(self.player_2, 2)
+		game.play(self.player_1, 3)
+		game.play(self.player_2, 5)
+		game.play(self.player_1, 8)
+		assert game.playedCases == [
+			'O', 'X', 'O',  
+			'X', 'X', 'O',
+			'X', 'O', 'X'
+			]
+		assert game.winner is None
+		assert game.equality is True
 
 if __name__ == 'main':
 	unittest.main()

@@ -3,6 +3,8 @@ from Player import Player
 
 class TicTacToe:
 	playedCases = []
+	equality = False
+	winner: Player | None = None
 	__lastPlayer: Player
 
 	def __init__(self, player_1: Player, player_2: Player):
@@ -14,14 +16,17 @@ class TicTacToe:
 		self.__lastPlayer = player
 		if (self.playedCases[position] != "."):
 			return False
-		self.playedCases[position] = player.symbol
-		return True
 
-	def winner(self) -> Player | None:
-		symbol = self.__lastPlayer.symbol
-		if self.__isWon(symbol):
-			return self.__lastPlayer
-		return None
+		self.playedCases[position] = player.symbol
+
+		if self.__isWon(self.__lastPlayer.symbol):
+			self.winner = self.__lastPlayer
+
+		if not '.' in self.playedCases:
+			self.equality = True
+			
+		return True
+		
 	
 	def __isWon(self, symbol: str) -> bool:
 		if (
@@ -42,3 +47,4 @@ class TicTacToe:
 			self.playedCases[2] == symbol and self.playedCases[4] == symbol and self.playedCases[6] == symbol
 			):
 			return True
+		return False
