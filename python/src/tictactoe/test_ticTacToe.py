@@ -1,13 +1,14 @@
 from TicTacToe import TicTacToe
 from Player import Player
+import unittest
 
-class TestTicTacToe:
+class TestTicTacToe(unittest.TestCase):
 	player_1 = Player("X")
 	player_2 = Player("O")
 	
 	def test_game_begin_with_empty_grid(self):
 		game = TicTacToe(self.player_1, self.player_2)
-		assert len(game.playedCases) is 9
+		assert len(game.playedCases) == 9
 		assert game.playedCases == [
 			'.', '.', '.', 
 			'.', '.', '.', 
@@ -17,7 +18,7 @@ class TestTicTacToe:
 	def test_game_accept_any_case_at_beginning(self):
 		game = TicTacToe(self.player_1, self.player_2)
 		assert game.play(self.player_1, 2) is True
-		assert game.playedCases[2] is "X"
+		assert game.playedCases[2] == "X"
 		assert game.winner is None
 		assert game.playedCases == [
 			'.', '.', 'X', 
@@ -29,7 +30,7 @@ class TestTicTacToe:
 		game = TicTacToe(self.player_1, self.player_2)
 		game.play(self.player_1, 2)
 		assert game.play(self.player_2, 2) is False
-		assert game.playedCases[2] is "X"
+		assert game.playedCases[2] == "X"
 		assert game.playedCases == [
 			'.', '.', 'X', 
 			'.', '.', '.', 
